@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 
 import "./ExpenseForm.css";
-function ExpenseForm({ onAddData }) {
+function ExpenseForm({ onAddData, onCancel }) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
@@ -23,7 +23,7 @@ function ExpenseForm({ onAddData }) {
     e.preventDefault();
     const formsExpenseData = {
       title: title,
-      amount: amount,
+      amount: +amount, //values are added as strings instead of numbers.
       date: moment(date, "YYYY-MM-DD").toDate(),
     };
 
@@ -32,6 +32,7 @@ function ExpenseForm({ onAddData }) {
     setAmount(0);
     setDate("");
   };
+
   return (
     <form onSubmit={formSubmitHandler}>
       <div className="new-expense__controls">
@@ -61,6 +62,9 @@ function ExpenseForm({ onAddData }) {
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
